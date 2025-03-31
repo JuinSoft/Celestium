@@ -13,8 +13,13 @@ const NFT_CONTRACT_ID = 'CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYS
 
 // Function to check if we're in demo mode
 export const checkDemoMode = () => {
-  // Access localStorage directly since we can't use React hooks in a non-component file
-  return localStorage.getItem('celestium-demo-mode') !== 'false';
+  try {
+    // Access localStorage directly since we can't use React hooks in a non-component file
+    return localStorage.getItem('celestium-demo-mode') !== 'false';
+  } catch (error) {
+    console.error('Error accessing localStorage:', error);
+    return true; // Default to demo mode if there's an error
+  }
 };
 
 // Create account

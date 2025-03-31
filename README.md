@@ -129,7 +129,8 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 👥 Authors
 
-- Your Name - Initial work
+- Jintu Kumar Das
+- Sonali Thakur
 
 ---
 
