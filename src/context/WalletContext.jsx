@@ -1,6 +1,9 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import StellarSdk from '@stellar/stellar-sdk';
 
+// Testnet network passphrase
+const NETWORK_PASSPHRASE = 'Test SDF Network ; September 2015';
+
 const WalletContext = createContext();
 
 export function useWallet() {
@@ -13,6 +16,7 @@ export function WalletProvider({ children }) {
   const [walletType, setWalletType] = useState(null); // 'freighter' or 'albedo' or 'rabet'
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [walletAddress, setWalletAddress] = useState('');
 
   // Check if wallet is already connected on mount
   useEffect(() => {
@@ -25,6 +29,7 @@ export function WalletProvider({ children }) {
             setPublicKey(publicKey);
             setIsConnected(true);
             setWalletType('freighter');
+            setWalletAddress(publicKey);
           }
         } catch (error) {
           console.error('Error checking Freighter connection:', error);
@@ -56,6 +61,7 @@ export function WalletProvider({ children }) {
       setPublicKey(publicKey);
       setIsConnected(true);
       setWalletType('freighter');
+      setWalletAddress(publicKey);
     } catch (error) {
       console.error('Error connecting to Freighter:', error);
       setError('Error connecting to wallet. Please try again.');
@@ -69,6 +75,7 @@ export function WalletProvider({ children }) {
     setPublicKey(null);
     setIsConnected(false);
     setWalletType(null);
+    setWalletAddress('');
   };
 
   // Function to sign a transaction using Freighter
@@ -81,7 +88,7 @@ export function WalletProvider({ children }) {
       try {
         const xdr = transaction.toXDR();
         const signedXdr = await window.freighter.signTransaction(xdr);
-        return StellarSdk.TransactionBuilder.fromXDR(signedXdr, StellarSdk.Networks.TESTNET);
+        return StellarSdk.TransactionBuilder.fromXDR(signedXdr, NETWORK_PASSPHRASE);
       } catch (error) {
         console.error('Error signing transaction:', error);
         throw error;
@@ -97,7 +104,8 @@ export function WalletProvider({ children }) {
     error,
     connectFreighter,
     disconnectWallet,
-    signTransaction
+    signTransaction,
+    walletAddress
   };
 
   return (

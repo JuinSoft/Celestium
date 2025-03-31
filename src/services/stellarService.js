@@ -2,17 +2,17 @@ import StellarSdk from '@stellar/stellar-sdk';
 
 // Define network constants
 const NETWORK = 'TESTNET'; // or 'PUBLIC' for mainnet
-const NETWORK_PASSPHRASE = StellarSdk.Networks.TESTNET; // or StellarSdk.Networks.PUBLIC for mainnet
+const NETWORK_PASSPHRASE = 'Test SDF Network ; September 2015'; // Hardcoded testnet passphrase
 const HORIZON_URL = 'https://horizon-testnet.stellar.org'; // or 'https://horizon.stellar.org' for mainnet
 
 // Initialize Stellar Server
-const server = new StellarSdk.Horizon.Server(HORIZON_URL);
+const server = new StellarSdk.Server(HORIZON_URL);
 
 // Contract ID (placeholder - this would be the actual deployed contract ID)
 const NFT_CONTRACT_ID = 'CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC';
 
 // Function to check if we're in demo mode
-const checkDemoMode = () => {
+export const checkDemoMode = () => {
   // Access localStorage directly since we can't use React hooks in a non-component file
   return localStorage.getItem('celestium-demo-mode') !== 'false';
 };
